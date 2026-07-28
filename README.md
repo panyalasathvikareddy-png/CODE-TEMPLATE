@@ -23,7 +23,7 @@
 
 
 
-## 🎲 Random Test Case Generator (Gen)
+## Random Test Case Generator (Gen)
 
 
 
@@ -77,11 +77,11 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 
 ##  Grid Utilities (Grd)
 
-
-
 | Function | Purpose | Input | Output | Time Complexity |
-|:---------|:--------|:------|:-------|:---------------|
-| `ok(int r, int c)` | Checks whether the given cell `(r, c)` lies within the grid boundaries. | `int row`, `int column` | `boolean` | `O(1)` |
+|----------|---------|-------|--------|-----------------|
+| `ok(int row, int col, int rows, int cols)` | Checks whether a grid cell lies within valid boundaries | `row, col, rows, cols` | `boolean` | `O(1)` |
+| `dfs(int row, int col, char[][] grid, boolean[][] vis)` | Performs Depth First Search traversal on a grid using 4-direction movement | `row, col, grid, visited array` | `void` | `O(R × C)` |
+| `bfs(int startRow, int startCol, char[][] grid, boolean[][] vis)` | Performs Breadth First Search traversal on a grid using queue and 4-direction movement | `startRow, startCol, grid, visited array` | `void` | `O(R × C)` |
 
 ##  Disjoint Set Union (DSU)
 
