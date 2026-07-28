@@ -50,25 +50,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `lArr(int n)` | Reads a long array of size `n` | `int n` | `long[]` | `O(n)` |
 | `sArr(int n)` | Reads a string array of size `n` | `int n` | `String[]` | `O(n)` |
 
-##  Stack Utilities (Stk)
-
-
-
-| Function | Purpose | Input | Output | Time Complexity |
-|:---------|:--------|:------|:-------|:---------------|
-| `nge(int[] arr)` | Finds the Next Greater Element for every element. | `int[] arr` | `int[]` | `O(n)` |
-| `ngei(int[] arr)` | Finds the index of the Next Greater Element. | `int[] arr` | `int[]` | `O(n)` |
-| `pge(int[] arr)` | Finds the Previous Greater Element for every element. | `int[] arr` | `int[]` | `O(n)` |
-| `pgei(int[] arr)` | Finds the index of the Previous Greater Element. | `int[] arr` | `int[]` | `O(n)` |
-| `nse(int[] arr)` | Finds the Next Smaller Element for every element. | `int[] arr` | `int[]` | `O(n)` |
-| `nsei(int[] arr)` | Finds the index of the Next Smaller Element. | `int[] arr` | `int[]` | `O(n)` |
-| `pse(int[] arr)` | Finds the Previous Smaller Element for every element. | `int[] arr` | `int[]` | `O(n)` |
-| `psei(int[] arr)` | Finds the index of the Previous Smaller Element. | `int[] arr` | `int[]` | `O(n)` |
-
-
-##  Stack Utilities (Stk)
-
-
+# Stk — Monotonic Stack
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
 | `nge(int[] arr)` | Finds the Next Greater Element for every element in the array. | `int[] arr` | `int[]` | `O(n)` |
