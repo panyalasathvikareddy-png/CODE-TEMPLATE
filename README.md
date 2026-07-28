@@ -1,5 +1,5 @@
 # CODE-TEMPLATE
-## ➗ Modular Arithmetic Utilities (Mod)
+##  Modular Arithmetic Utilities (Mod)
 
 `MOD = 1_000_000_007`
 
@@ -11,7 +11,7 @@
 | `inv(long a)` | Computes the modular multiplicative inverse using Fermat's Little Theorem (`a^(MOD-2) % MOD`). | `long a` | `long` | `O(log MOD)` |
 | `div(long a, long b)` | Performs modular division `(a / b) % MOD` by multiplying `a` with the modular inverse of `b`. | `long a`, `long b` | `long` | `O(log MOD)` |
 
-## 🐞 Debug Utilities (DBG)
+##  Debug Utilities (DBG)
 
 
 
@@ -36,9 +36,6 @@
 | `str(int len)` | Generates a random lowercase string of the specified length. | `int len` | `String` | `O(len)` |
 | `edgeArr(int n)` | Generates a random edge list for graph testing. | `int n` | `int[][]` | `O(n)` |
 
-
-
-## 📥 Fast Input Utilities (IO)
 ## Fast Input Utilities (IO)
 
 A custom fast input class using `BufferedReader` and `StringTokenizer` for competitive programming.
@@ -53,7 +50,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `lArr(int n)` | Reads a long array of size `n` | `int n` | `long[]` | `O(n)` |
 | `sArr(int n)` | Reads a string array of size `n` | `int n` | `String[]` | `O(n)` |
 
-## 📚 Stack Utilities (Stk)
+##  Stack Utilities (Stk)
 
 
 
@@ -69,7 +66,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `psei(int[] arr)` | Finds the index of the Previous Smaller Element. | `int[] arr` | `int[]` | `O(n)` |
 
 
-## 📚 Stack Utilities (Stk)
+##  Stack Utilities (Stk)
 
 
 | Function | Purpose | Input | Output | Time Complexity |
@@ -78,7 +75,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `ngei(int[] arr)` | Finds the index of the Next Greater Element for every element in the array. | `int[] arr` | `int[]` | `O(n)` |
 
 
-## 🌐 Grid Utilities (Grd)
+##  Grid Utilities (Grd)
 
 
 
@@ -86,7 +83,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 |:---------|:--------|:------|:-------|:---------------|
 | `ok(int r, int c)` | Checks whether the given cell `(r, c)` lies within the grid boundaries. | `int row`, `int column` | `boolean` | `O(1)` |
 
-## 🔗 Disjoint Set Union (DSU)
+##  Disjoint Set Union (DSU)
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -94,7 +91,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `union(int a, int b)` | Merges the sets containing `a` and `b`. | `int a`, `int b` | `void` | `O(α(n))` |
 | `same(int a, int b)` | Checks whether `a` and `b` belong to the same set. | `int a`, `int b` | `boolean` | `O(α(n))` |
 
-## 🌳 Segment Tree (ST)
+##  Segment Tree (ST)
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -102,7 +99,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `upd(int node, int start, int end, int idx, long val)` | Updates the value at a specific index in the Segment Tree. | `int node`, `int start`, `int end`, `int idx`, `long val` | `void` | `O(log n)` |
 | `q(int node, int start, int end, int left, int right)` | Returns the result of a range query over the interval `[left, right]`. | `int node`, `int start`, `int end`, `int left`, `int right` | `long` | `O(log n)` |
 
-## 📐 Mathematical Utilities (Mth)
+##  Mathematical Utilities (Mth)
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -112,7 +109,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `prime(long n)` | Checks whether a number is prime. | `long n` | `boolean` | `O(√n)` |
 | `sieve(int n)` | Generates all prime numbers up to `n` using the Sieve of Eratosthenes. | `int n` | `boolean[]` | `O(n log log n)` |
 
-## 📊 Array Utilities (Arr)
+##  Array Utilities (Arr)
 
 
 | Function | Purpose | Input | Output | Time Complexity |
@@ -128,7 +125,7 @@ A custom fast input class using `BufferedReader` and `StringTokenizer` for compe
 | `pGcd(int[] arr)` | Computes the Prefix GCD array. | `int[] arr` | `int[]` | `O(n log V)` |
 | `sGcd(int[] arr)` | Computes the Suffix GCD array. | `int[] arr` | `int[]` | `O(n log V)` |
 
-## 🔢 Bit Manipulation Utilities (Bit)
+##  Bit Manipulation Utilities (Bit)
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
