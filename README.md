@@ -13,7 +13,7 @@
 
 ## 🐞 Debug Utilities (DBG)
 
-Provides lightweight debugging methods that print information only when the `DEBUG` flag is enabled.
+
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -21,11 +21,11 @@ Provides lightweight debugging methods that print information only when the `DEB
 | `grid(String label, char[][] g)` | Prints a 2D character grid with a descriptive label. | `String label`, `char[][] grid` | `void` | `O(rows × cols)` |
 | `msg(String info)` | Prints a custom debug message. | `String info` | `void` | `O(1)` |
 
-> **Note:** All debug methods execute only when the `DEBUG` flag is set to `true`.
+
 
 ## 🎲 Random Test Case Generator (Gen)
 
-Provides utility methods for generating random numbers, arrays, strings, and graphs. Useful for stress testing and creating custom test cases.
+
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -36,11 +36,11 @@ Provides utility methods for generating random numbers, arrays, strings, and gra
 | `str(int len)` | Generates a random lowercase string of the specified length. | `int len` | `String` | `O(len)` |
 | `edgeArr(int n)` | Generates a random edge list for graph testing. | `int n` | `int[][]` | `O(n)` |
 
-> **Note:** These utilities are primarily intended for stress testing, debugging, and validating algorithm correctness.
+
 
 ## 📥 Fast Input Utilities (IO)
 
-Provides fast input methods for reading primitive data types, arrays, matrices, and strings. Optimized for Competitive Programming and Online Assessments.
+
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -62,7 +62,7 @@ Provides fast input methods for reading primitive data types, arrays, matrices, 
 
 ## 📚 Stack Utilities (Stk)
 
-Provides helper methods based on **Monotonic Stack** for efficiently solving Next/Previous Greater/Smaller Element problems.
+
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -78,7 +78,6 @@ Provides helper methods based on **Monotonic Stack** for efficiently solving Nex
 
 ## 📚 Stack Utilities (Stk)
 
-Provides helper methods based on **Monotonic Stack** for efficiently solving Next Greater Element problems.
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -88,7 +87,7 @@ Provides helper methods based on **Monotonic Stack** for efficiently solving Nex
 
 ## 🌐 Grid Utilities (Grd)
 
-Provides helper methods for working with 2D grids and validating cell positions during graph and matrix traversals.
+
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -96,19 +95,13 @@ Provides helper methods for working with 2D grids and validating cell positions 
 
 ## 🔗 Disjoint Set Union (DSU)
 
-Implements the **Disjoint Set Union (Union-Find)** data structure for efficiently managing disjoint sets. Supports path compression and union operations for near constant-time performance.
-
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
 | `find(int x)` | Finds the representative (parent) of the set containing `x` using path compression. | `int x` | `int` | `O(α(n))` |
 | `union(int a, int b)` | Merges the sets containing `a` and `b`. | `int a`, `int b` | `void` | `O(α(n))` |
 | `same(int a, int b)` | Checks whether `a` and `b` belong to the same set. | `int a`, `int b` | `boolean` | `O(α(n))` |
 
-> **Note:** `α(n)` denotes the inverse Ackermann function, which grows extremely slowly and is effectively constant for practical input sizes.
-
 ## 🌳 Segment Tree (ST)
-
-Implements a **Segment Tree** for efficient range queries and point updates on arrays.
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -117,8 +110,6 @@ Implements a **Segment Tree** for efficient range queries and point updates on a
 | `q(int node, int start, int end, int left, int right)` | Returns the result of a range query over the interval `[left, right]`. | `int node`, `int start`, `int end`, `int left`, `int right` | `long` | `O(log n)` |
 
 ## 📐 Mathematical Utilities (Mth)
-
-Provides commonly used mathematical helper functions for Competitive Programming, including GCD, LCM, modular exponentiation, primality testing, and prime generation.
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -130,7 +121,6 @@ Provides commonly used mathematical helper functions for Competitive Programming
 
 ## 📊 Array Utilities (Arr)
 
-Provides commonly used helper methods for array operations, including binary search, prefix/suffix computations, and utility functions frequently used in Competitive Programming.
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
@@ -146,8 +136,6 @@ Provides commonly used helper methods for array operations, including binary sea
 | `sGcd(int[] arr)` | Computes the Suffix GCD array. | `int[] arr` | `int[]` | `O(n log V)` |
 
 ## 🔢 Bit Manipulation Utilities (Bit)
-
-Provides helper methods for performing common bit manipulation operations. These utilities simplify checking, setting, clearing, and toggling individual bits in an integer.
 
 | Function | Purpose | Input | Output | Time Complexity |
 |:---------|:--------|:------|:-------|:---------------|
