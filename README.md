@@ -39,26 +39,19 @@
 
 
 ## 📥 Fast Input Utilities (IO)
+## Fast Input Utilities (IO)
 
-
+A custom fast input class using `BufferedReader` and `StringTokenizer` for competitive programming.
 
 | Function | Purpose | Input | Output | Time Complexity |
-|:---------|:--------|:------|:-------|:---------------|
-| `next()` | Reads the next whitespace-separated token. | - | `String` | `O(length)` |
-| `nextLine()` | Reads an entire line of input. | - | `String` | `O(length)` |
-| `i()` | Reads an integer. | - | `int` | `O(1)` |
-| `l()` | Reads a long integer. | - | `long` | `O(1)` |
-| `d()` | Reads a double value. | - | `double` | `O(1)` |
-| `c()` | Reads a character. | - | `char` | `O(1)` |
-| `iArr(int n)` | Reads an integer array of size `n`. | `int n` | `int[]` | `O(n)` |
-| `lArr(int n)` | Reads a long array of size `n`. | `int n` | `long[]` | `O(n)` |
-| `dArr(int n)` | Reads a double array of size `n`. | `int n` | `double[]` | `O(n)` |
-| `sArr(int n)` | Reads a string array of size `n`. | `int n` | `String[]` | `O(n)` |
-| `cArr()` | Reads a character array from the next token. | - | `char[]` | `O(length)` |
-| `iMat(int n, int m)` | Reads an `n × m` integer matrix. | `int n`, `int m` | `int[][]` | `O(n × m)` |
-| `lMat(int n, int m)` | Reads an `n × m` long matrix. | `int n`, `int m` | `long[][]` | `O(n × m)` |
-| `dMat(int n, int m)` | Reads an `n × m` double matrix. | `int n`, `int m` | `double[][]` | `O(n × m)` |
-| `cMat(int n)` | Reads a character matrix with `n` rows. | `int n` | `char[][]` | `O(n × m)` |
+|----------|---------|-------|--------|----------------|
+| `next()` | Reads the next whitespace-separated token | - | `String` | `O(length)` |
+| `i()` | Reads an integer value | - | `int` | `O(1)` |
+| `l()` | Reads a long integer value | - | `long` | `O(1)` |
+| `line()` | Reads a complete line of input | - | `String` | `O(length)` |
+| `iArr(int n)` | Reads an integer array of size `n` | `int n` | `int[]` | `O(n)` |
+| `lArr(int n)` | Reads a long array of size `n` | `int n` | `long[]` | `O(n)` |
+| `sArr(int n)` | Reads a string array of size `n` | `int n` | `String[]` | `O(n)` |
 
 ## 📚 Stack Utilities (Stk)
 
