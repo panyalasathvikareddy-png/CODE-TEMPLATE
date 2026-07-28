@@ -1,166 +1,748 @@
 import java.io.*;
 import java.util.*;
 
-class Main{
+public class Main {
 
-    public static final boolean DEBUG = true;
-  // Modular Arithmetic Utilities (Class: Mod)
-static class Mod {
-    public static final long MOD = 1_000_000_007L;
+    static final boolean DEBUG = true;
 
-    // Purpose: Modular Addition (a + b) % MOD | Input: long valA, long valB | Output: long
-    public static long add(long a, long b) { long res = (a % MOD + b % MOD + MOD) % MOD; DBG.log("Mod.add (" + a + "+" + b + ")", res); return res; }
-    // Purpose: Modular Subtraction (a - b) % MOD | Input: long valA, long valB | Output: long
-    public static long sub(long a, long b) { long res = (a % MOD - b % MOD + MOD) % MOD; DBG.log("Mod.sub (" + a + "-" + b + ")", res); return res; }
-    // Purpose: Modular Multiplication (a * b) % MOD | Input: long valA, long valB | Output: long
-    public static long mul(long a, long b) { long res = ((a % MOD) * (b % MOD)) % MOD; DBG.log("Mod.mul (" + a + "*" + b + ")", res); return res; }
-    // Purpose: Modular Exponentiation (a^b % MOD) | Input: long base, long exponent | Output: long
-    public static long pow(long a, long b) { long res = Mth.pow(a, b, MOD); DBG.log("Mod.pow (" + a + "^" + b + ")", res); return res; }
-    // Purpose: Modular Inverse via Fermat's Little Theorem (a^(MOD-2) % MOD) | Input: long val | Output: long
-    public static long inv(long a) { long res = pow(a, MOD - 2); DBG.log("Mod.inv (" + a + ")", res); return res; }
-    // Purpose: Modular Division (a / b) % MOD via Fermat's Little Theorem | Input: long valA, long valB | Output: long
-    public static long div(long a, long b) { long res = mul(a, inv(b)); DBG.log("Mod.div (" + a + "/" + b + ")", res); return res; }
-}
-   // Debug Utilities (Class: DBG)
-    static class DBG {
-        // Purpose: Log variable name and value | Input: String label, Object val | Output: void
-        public static void log(String label, Object val) { if (DEBUG) System.err.println("[DEBUG] " + label + " = " + (val instanceof int[] ? Arrays.toString((int[]) val) : val instanceof long[] ? Arrays.toString((long[]) val) : val instanceof Object[] ? Arrays.deepToString((Object[]) val) : val)); }
-        // Purpose: Print 2D char matrix | Input: String label, char[][] grid | Output: void
-        public static void grid(String label, char[][] g) { if (!DEBUG) return; System.err.println("[DEBUG GRID] " + label + ":"); for (char[] r : g) System.err.println("  " + new String(r)); }
-        // Purpose: Log execution milestone | Input: String infoMessage | Output: void
-        public static void msg(String info) { if (DEBUG) System.err.println("[DEBUG LOG] " + info); }
+// ======================== Modular Arithmetic Utilities ========================
+
+    static final class Mod {
+
+        private Mod() {}
+
+        static final long MOD = 1_000_000_007L;
+
+        // Returns (a + b) % MOD
+        static long add(long a, long b) {
+            long result = ((a % MOD) + (b % MOD)) % MOD;
+            if (result < 0) result += MOD;
+            DBG.log("Mod.add", result);
+            return result;
+        }
+
+        // Returns (a - b) % MOD
+        static long sub(long a, long b) {
+            long result = ((a % MOD) - (b % MOD)) % MOD;
+            if (result < 0) result += MOD;
+            DBG.log("Mod.sub", result);
+            return result;
+        }
+
+        // Returns (a × b) % MOD
+        static long mul(long a, long b) {
+            long result = ((a % MOD) * (b % MOD)) % MOD;
+            DBG.log("Mod.mul", result);
+            return result;
+        }
+
+        // Computes a^b % MOD
+        static long pow(long base, long exp) {
+            long result = Mth.pow(base, exp, MOD);
+            DBG.log("Mod.pow", result);
+            return result;
+        }
+
+        // Computes modular inverse of a
+        static long inv(long value) {
+            long result = pow(value, MOD - 2);
+            DBG.log("Mod.inv", result);
+            return result;
+        }
+
+        // Computes (a / b) % MOD
+        static long div(long a, long b) {
+            long result = mul(a, inv(b));
+            DBG.log("Mod.div", result);
+            return result;
+        }
     }
-  // Edge Case & Test Case Generator (Class: Gen)
-    static class Gen {
-        private static final Random rnd = new Random();
-        // Purpose: Generate random integer in range | Input: int minVal, int maxVal | Output: int
-        public static int i(int min, int max) { int val = min + rnd.nextInt(max - min + 1); DBG.log("Gen.i [" + min + "," + max + "]", val); return val; }
-        // Purpose: Generate random long in range | Input: long minVal, long maxVal | Output: long
-        public static long l(long min, long max) { long val = min + (long)(rnd.nextDouble() * (max - min + 1)); DBG.log("Gen.l [" + min + "," + max + "]", val); return val; }
-        // Purpose: Generate random integer array | Input: int size, int minVal, int maxVal | Output: int[]
-        public static int[] iArr(int sz, int min, int max) { int[] a = new int[sz]; for (int k = 0; k < sz; k++) a[k] = i(min, max); DBG.log("Gen.iArr", a); return a; }
-        // Purpose: Generate edge-case array (0, 1, -1, INT_MAX, INT_MIN) | Input: int size | Output: int[]
-        public static int[] edgeArr(int sz) { int[] a = new int[sz]; int[] pool = {0, 1, -1, Integer.MAX_VALUE, Integer.MIN_VALUE}; for (int k = 0; k < sz; k++) a[k] = pool[rnd.nextInt(pool.length)]; DBG.log("Gen.edgeArr", a); return a; }
-        // Purpose: Generate random lowercase English string | Input: int length | Output: String
-        public static String str(int len) { StringBuilder sb = new StringBuilder(); for (int k = 0; k < len; k++) sb.append((char)('a' + rnd.nextInt(26))); String res = sb.toString(); DBG.log("Gen.str", res); return res; }
+
+// ============================ Debug Utilities ================================
+
+    static final class DBG {
+
+        private DBG() {}
+
+        // Prints any variable or array
+        static void log(String key, Object value) {
+
+            if (!DEBUG) return;
+
+            if (value instanceof int[])
+                System.err.println("[DEBUG] " + key + " -> " + Arrays.toString((int[]) value));
+
+            else if (value instanceof long[])
+                System.err.println("[DEBUG] " + key + " -> " + Arrays.toString((long[]) value));
+
+            else if (value instanceof Object[])
+                System.err.println("[DEBUG] " + key + " -> " + Arrays.deepToString((Object[]) value));
+
+            else
+                System.err.println("[DEBUG] " + key + " -> " + value);
+        }
+
+        // Prints a character grid
+        static void grid(String title, char[][] grid) {
+
+            if (!DEBUG) return;
+
+            System.err.println("\n" + title);
+
+            for (char[] row : grid)
+                System.err.println(Arrays.toString(row));
+        }
+
+        // Prints custom debug message
+        static void msg(String message) {
+
+            if (DEBUG)
+                System.err.println("[INFO] " + message);
+        }
     }
- // Fast Input Reader (Class: IO)
-    static class IO {
-        private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+// ======================= Random Test Case Generator ==========================
+
+    static final class Gen {
+
+        private Gen() {}
+
+        private static final Random RAND = new Random();
+
+        // Random integer in [low, high]
+        static int i(int low, int high) {
+            return low + RAND.nextInt(high - low + 1);
+        }
+
+        // Random long in [low, high]
+        static long l(long low, long high) {
+            return low + (long) (RAND.nextDouble() * (high - low + 1));
+        }
+
+        // Random integer array
+        static int[] iArr(int size, int low, int high) {
+
+            int[] arr = new int[size];
+
+            for (int idx = 0; idx < size; idx++)
+                arr[idx] = i(low, high);
+
+            return arr;
+        }
+
+        // Generates common edge-case values
+        static int[] edgeArr(int size) {
+
+            int[] pool = {
+                    Integer.MIN_VALUE,
+                    Integer.MAX_VALUE,
+                    -1,
+                    0,
+                    1
+            };
+
+            int[] arr = new int[size];
+
+            for (int idx = 0; idx < size; idx++)
+                arr[idx] = pool[RAND.nextInt(pool.length)];
+
+            return arr;
+        }
+
+        // Random lowercase string
+        static String str(int len) {
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < len; i++)
+                sb.append((char) ('a' + RAND.nextInt(26)));
+
+            return sb.toString();
+        }
+    }
+
+// =========================== Fast Input Reader ===============================
+
+    static final class IO {
+
+        private IO() {}
+
+        private static final BufferedReader br =
+                new BufferedReader(new InputStreamReader(System.in));
+
         private static StringTokenizer st;
 
-        // Purpose: Read next space-separated token | Input: none | Output: String
-        public static String next() { while (st == null || !st.hasMoreTokens()) { try { String line = br.readLine(); if (line == null) return null; st = new StringTokenizer(line); } catch (IOException e) { e.printStackTrace(); } } String res = st.nextToken(); DBG.log("IO.next", res); return res; }
-        // Purpose: Read next integer | Input: none | Output: int
-        public static int i() { int val = Integer.parseInt(next()); DBG.log("IO.i", val); return val; }
-        // Purpose: Read next long integer | Input: none | Output: long
-        public static long l() { long val = Long.parseLong(next()); DBG.log("IO.l", val); return val; }
-        // Purpose: Read full remaining line | Input: none | Output: String
-        public static String line() { try { String res = br.readLine(); DBG.log("IO.line", res); return res; } catch (IOException e) { e.printStackTrace(); return null; } }
-        // Purpose: Read 1D integer array | Input: int size | Output: int[]
-        public static int[] iArr(int sz) { int[] a = new int[sz]; for (int k = 0; k < sz; k++) a[k] = i(); DBG.log("IO.iArr", a); return a; }
-        // Purpose: Read 1D long array | Input: int size | Output: long[]
-        public static long[] lArr(int sz) { long[] a = new long[sz]; for (int k = 0; k < sz; k++) a[k] = l(); DBG.log("IO.lArr", a); return a; }
-        // Purpose: Read 1D string array | Input: int size | Output: String[]
-        public static String[] sArr(int sz) { String[] a = new String[sz]; for (int k = 0; k < sz; k++) a[k] = next(); DBG.log("IO.sArr", a); return a; }
-    }// Monotonic Stack Utilities (Class: Stk)
-    static class Stk {
-        // Purpose: Find Next Greater Element values | Input: int[] array | Output: int[]
-        public static int[] nge(int[] a) { DBG.log("Stk.nge Input", a); int n = a.length, res[] = new int[n]; Arrays.fill(res, -1); Deque<Integer> st = new ArrayDeque<>(); for (int k = n - 1; k >= 0; k--) { while (!st.isEmpty() && st.peek() <= a[k]) st.pop(); if (!st.isEmpty()) res[k] = st.peek(); st.push(a[k]); } DBG.log("Stk.nge Result", res); return res; }
-        // Purpose: Find Next Greater Element indices | Input: int[] array | Output: int[]
-        public static int[] ngei(int[] a) { DBG.log("Stk.ngei Input", a); int n = a.length, res[] = new int[n]; Arrays.fill(res, -1); Deque<Integer> st = new ArrayDeque<>(); for (int k = n - 1; k >= 0; k--) { while (!st.isEmpty() && a[st.peek()] <= a[k]) st.pop(); if (!st.isEmpty()) res[k] = st.peek(); st.push(k); } DBG.log("Stk.ngei Result", res); return res; }
+        // Reads next token
+        static String next() {
+
+            while (st == null || !st.hasMoreTokens()) {
+
+                try {
+
+                    String line = br.readLine();
+
+                    if (line == null)
+                        return null;
+
+                    st = new StringTokenizer(line);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            return st.nextToken();
+        }
+
+        // Reads integer
+        static int i() {
+            return Integer.parseInt(next());
+        }
+
+        // Reads long
+        static long l() {
+            return Long.parseLong(next());
+        }
+
+        // Reads complete line
+        static String line() {
+
+            try {
+                return br.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // Reads integer array
+        static int[] iArr(int n) {
+
+            int[] arr = new int[n];
+
+            for (int idx = 0; idx < n; idx++)
+                arr[idx] = i();
+
+            return arr;
+        }
+
+        // Reads long array
+        static long[] lArr(int n) {
+
+            long[] arr = new long[n];
+
+            for (int idx = 0; idx < n; idx++)
+                arr[idx] = l();
+
+            return arr;
+        }
+
+        // Reads string array
+        static String[] sArr(int n) {
+
+            String[] arr = new String[n];
+
+            for (int idx = 0; idx < n; idx++)
+                arr[idx] = next();
+
+            return arr;
+        }
     }
 
-    // Grid Traversal Utilities (Class: Grd)
-    static class Grd {
-        private static final int[] dR = {-1, 1, 0, 0}, dC = {0, 0, -1, 1};
+    // ========================= Grid Traversal Utilities ==========================
 
-        // Purpose: Check if grid cell coordinates are valid | Input: int row, int col, int maxRows, int maxCols | Output: boolean
-        public static boolean ok(int r, int c, int R, int C) { boolean valid = r >= 0 && r < R && c >= 0 && c < C; DBG.log("Grd.ok (" + r + "," + c + ")", valid); return valid; }
-        // Purpose: 4-directional Depth-First Search on grid | Input: int row, int col, char[][] grid, boolean[][] visited | Output: void
-        public static void dfs(int r, int c, char[][] g, boolean[][] vis) { vis[r][c] = true; DBG.log("Grd.dfs Visit", r + "," + c); for (int k = 0; k < 4; k++) { int nR = r + dR[k], nC = c + dC[k]; if (ok(nR, nC, g.length, g[0].length) && !vis[nR][nC] && g[nR][nC] != '#') dfs(nR, nC, g, vis); } }
-        // Purpose: 4-directional Breadth-First Search on grid | Input: int startRow, int startCol, char[][] grid, boolean[][] visited | Output: void
-        public static void bfs(int sR, int sC, char[][] g, boolean[][] vis) { Queue<int[]> q = new ArrayDeque<>(); q.add(new int[]{sR, sC}); vis[sR][sC] = true; DBG.log("Grd.bfs Start", sR + "," + sC); while (!q.isEmpty()) { int[] cur = q.poll(); DBG.log("Grd.bfs Cell", cur[0] + "," + cur[1]); for (int k = 0; k < 4; k++) { int nR = cur[0] + dR[k], nC = cur[1] + dC[k]; if (ok(nR, nC, g.length, g[0].length) && !vis[nR][nC] && g[nR][nC] != '#') { vis[nR][nC] = true; q.add(new int[]{nR, nC}); } } } }
+static final class Grd {
+
+    private Grd() {}
+
+    private static final int[] ROW = {-1, 1, 0, 0};
+    private static final int[] COL = {0, 0, -1, 1};
+
+    // Checks whether a cell lies inside the grid
+    static boolean ok(int row, int col, int rows, int cols) {
+
+        return row >= 0 && row < rows && col >= 0 && col < cols;
     }
 
-    // Disjoint Set Union (Class: DSU)
-    static class DSU {
-        private final int[] p, sz;
+    // Performs DFS on a grid
+    static void dfs(int row, int col, char[][] grid, boolean[][] vis) {
 
-        // Purpose: Initialize DSU structure | Input: int nodeCount | Output: DSU instance
-        public DSU(int n) { p = new int[n]; sz = new int[n]; for (int k = 0; k < n; k++) { p[k] = k; sz[k] = 1; } DBG.msg("DSU.Init with size " + n); }
-        // Purpose: Find set representative with path compression | Input: int node | Output: int
-        public int find(int k) { int root = p[k] == k ? k : (p[k] = find(p[k])); DBG.log("DSU.find (" + k + ")", root); return root; }
-        // Purpose: Union two sets by size | Input: int nodeA, int nodeB | Output: boolean
-        public boolean union(int a, int b) { int rA = find(a), rB = find(b); if (rA == rB) { DBG.log("DSU.union Redundant", a + "-" + b); return false; } if (sz[rA] < sz[rB]) { int t = rA; rA = rB; rB = t; } p[rB] = rA; sz[rA] += sz[rB]; DBG.log("DSU.union Merged", a + " into " + b); return true; }
-        // Purpose: Check if two nodes belong to same set | Input: int nodeA, int nodeB | Output: boolean
-        public boolean same(int a, int b) { boolean res = find(a) == find(b); DBG.log("DSU.same (" + a + "," + b + ")", res); return res; }
+        vis[row][col] = true;
+
+        for (int dir = 0; dir < 4; dir++) {
+
+            int nextRow = row + ROW[dir];
+            int nextCol = col + COL[dir];
+
+            if (ok(nextRow, nextCol, grid.length, grid[0].length)
+                    && !vis[nextRow][nextCol]
+                    && grid[nextRow][nextCol] != '#') {
+
+                dfs(nextRow, nextCol, grid, vis);
+            }
+        }
     }
 
-    // Segment Tree for Range Sum (Class: ST)
-    static class ST {
-        private final int n; private final long[] t;
+    // Performs BFS on a grid
+    static void bfs(int startRow, int startCol, char[][] grid, boolean[][] vis) {
 
-        // Purpose: Build Segment Tree from initial array | Input: long[] array | Output: ST instance
-        public ST(long[] a) { this.n = a.length; this.t = new long[4 * n]; DBG.log("ST.Init Input", a); build(a, 0, 0, n - 1); }
-        private void build(long[] a, int node, int s, int e) { if (s == e) { t[node] = a[s]; return; } int m = (s + e) / 2; build(a, 2 * node + 1, s, m); build(a, 2 * node + 2, m + 1, e); t[node] = t[2 * node + 1] + t[2 * node + 2]; }
-        // Purpose: Perform point update | Input: int targetIndex, long newValue | Output: void
-        public void upd(int idx, long val) { DBG.log("ST.upd Idx " + idx, val); upd(0, 0, n - 1, idx, val); }
-        private void upd(int node, int s, int e, int idx, long val) { if (s == e) { t[node] = val; return; } int m = (s + e) / 2; if (s <= idx && idx <= m) upd(2 * node + 1, s, m, idx, val); else upd(2 * node + 2, m + 1, e, idx, val); t[node] = t[2 * node + 1] + t[2 * node + 2]; }
-        // Purpose: Query range sum [left, right] | Input: int leftIndex, int rightIndex | Output: long
-        public long q(int l, int r) { long res = q(0, 0, n - 1, l, r); DBG.log("ST.q [" + l + "," + r + "]", res); return res; }
-        private long q(int node, int s, int e, int l, int r) { if (r < s || e < l) return 0; if (l <= s && e <= r) return t[node]; int m = (s + e) / 2; return q(2 * node + 1, s, m, l, r) + q(2 * node + 2, m + 1, e, l, r); }
+        Queue<int[]> queue = new ArrayDeque<>();
+
+        queue.offer(new int[]{startRow, startCol});
+        vis[startRow][startCol] = true;
+
+        while (!queue.isEmpty()) {
+
+            int[] cell = queue.poll();
+
+            int row = cell[0];
+            int col = cell[1];
+
+            for (int dir = 0; dir < 4; dir++) {
+
+                int nextRow = row + ROW[dir];
+                int nextCol = col + COL[dir];
+
+                if (ok(nextRow, nextCol, grid.length, grid[0].length)
+                        && !vis[nextRow][nextCol]
+                        && grid[nextRow][nextCol] != '#') {
+
+                    vis[nextRow][nextCol] = true;
+                    queue.offer(new int[]{nextRow, nextCol});
+                }
+            }
+        }
+    }
+}
+
+
+// =========================== Disjoint Set Union ==============================
+
+static final class DSU {
+
+    private final int[] parent;
+    private final int[] size;
+
+    // Initializes DSU
+    DSU(int nodes) {
+
+        parent = new int[nodes];
+        size = new int[nodes];
+
+        for (int i = 0; i < nodes; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
     }
 
-    // Math Utilities (Class: Mth)
-    static class Mth {
-        // Purpose: Compute Greatest Common Divisor | Input: long firstNum, long secondNum | Output: long
-        public static long gcd(long a, long b) { long res = b == 0 ? a : gcd(b, a % b); DBG.log("Mth.gcd (" + a + "," + b + ")", res); return res; }
-        // Purpose: Compute Least Common Multiple | Input: long firstNum, long secondNum | Output: long
-        public static long lcm(long a, long b) { long res = (a / gcd(a, b)) * b; DBG.log("Mth.lcm (" + a + "," + b + ")", res); return res; }
-        // Purpose: Compute modular exponentiation (base^exp % mod) | Input: long baseNum, long exponent, long modulo | Output: long
-        public static long pow(long b, long e, long m) { long res = 1, origB = b, origE = e; b %= m; while (e > 0) { if ((e & 1) == 1) res = (res * b) % m; b = (b * b) % m; e >>= 1; } DBG.log("Mth.pow (" + origB + "^" + origE + "%" + m + ")", res); return res; }
-        // Purpose: Test primality in O(sqrt(N)) | Input: long number | Output: boolean
-        public static boolean prime(long n) { if (n <= 1) { DBG.log("Mth.prime (" + n + ")", false); return false; } if (n <= 3) { DBG.log("Mth.prime (" + n + ")", true); return true; } if (n % 2 == 0 || n % 3 == 0) { DBG.log("Mth.prime (" + n + ")", false); return false; } for (long k = 5; k * k <= n; k += 6) if (n % k == 0 || n % (k + 2) == 0) { DBG.log("Mth.prime (" + n + ")", false); return false; } DBG.log("Mth.prime (" + n + ")", true); return true; }
-        // Purpose: Generate prime table using Sieve of Eratosthenes | Input: int maxLimit | Output: boolean[]
-        public static boolean[] sieve(int n) { boolean[] isP = new boolean[n + 1]; Arrays.fill(isP, true); if (n >= 0) isP[0] = false; if (n >= 1) isP[1] = false; for (int p = 2; p * p <= n; p++) if (isP[p]) for (int k = p * p; k <= n; k += p) isP[k] = false; DBG.msg("Mth.sieve Completed for N=" + n); return isP; }
+    // Finds representative of a set
+    int find(int node) {
+
+        if (parent[node] != node)
+            parent[node] = find(parent[node]);
+
+        return parent[node];
     }
 
-    // Array Binary Search & Prefix/Suffix Utilities (Class: Arr)
-    static class Arr {
-        // Purpose: Find lower bound index (first index where element >= target) | Input: int[] sortedArray, int targetValue | Output: int
-        public static int lb(int[] a, int x) { int l = 0, h = a.length; while (l < h) { int m = (l + h) / 2; if (a[m] >= x) h = m; else l = m + 1; } DBG.log("Arr.lb for " + x, l); return l; }
-        // Purpose: Find upper bound index (first index where element > target) | Input: int[] sortedArray, int targetValue | Output: int
-        public static int ub(int[] a, int x) { int l = 0, h = a.length; while (l < h) { int m = (l + h) / 2; if (a[m] > x) h = m; else l = m + 1; } DBG.log("Arr.ub for " + x, l); return l; }
+    // Merges two components
+    boolean union(int u, int v) {
 
-        // --- PREFIX / SUFFIX UTILITIES ---
-        // Purpose: Compute 1-indexed Prefix Sum array | Input: int[] array | Output: long[]
-        public static long[] pSum(int[] a) { int n = a.length; long[] p = new long[n + 1]; for (int k = 0; k < n; k++) p[k + 1] = p[k] + a[k]; DBG.log("Arr.pSum Result", p); return p; }
-        // Purpose: Compute Suffix Sum array | Input: int[] array | Output: long[]
-        public static long[] sSum(int[] a) { int n = a.length; long[] s = new long[n + 1]; for (int k = n - 1; k >= 0; k--) s[k] = s[k + 1] + a[k]; DBG.log("Arr.sSum Result", s); return s; }
-        // Purpose: Compute Prefix Minimums | Input: int[] array | Output: int[]
-        public static int[] pMin(int[] a) { int n = a.length, p[] = new int[n]; if (n == 0) return p; p[0] = a[0]; for (int k = 1; k < n; k++) p[k] = Math.min(p[k - 1], a[k]); DBG.log("Arr.pMin Result", p); return p; }
-        // Purpose: Compute Suffix Minimums | Input: int[] array | Output: int[]
-        public static int[] sMin(int[] a) { int n = a.length, s[] = new int[n]; if (n == 0) return s; s[n - 1] = a[n - 1]; for (int k = n - 2; k >= 0; k--) s[k] = Math.min(s[k + 1], a[k]); DBG.log("Arr.sMin Result", s); return s; }
-        // Purpose: Compute Prefix Maximums | Input: int[] array | Output: int[]
-        public static int[] pMax(int[] a) { int n = a.length, p[] = new int[n]; if (n == 0) return p; p[0] = a[0]; for (int k = 1; k < n; k++) p[k] = Math.max(p[k - 1], a[k]); DBG.log("Arr.pMax Result", p); return p; }
-        // Purpose: Compute Suffix Maximums | Input: int[] array | Output: int[]
-        public static int[] sMax(int[] a) { int n = a.length, s[] = new int[n]; if (n == 0) return s; s[n - 1] = a[n - 1]; for (int k = n - 2; k >= 0; k--) s[k] = Math.max(s[k + 1], a[k]); DBG.log("Arr.sMax Result", s); return s; }
-        // Purpose: Compute Prefix GCDs | Input: int[] array | Output: long[]
-        public static long[] pGcd(int[] a) { int n = a.length; long[] p = new long[n]; if (n == 0) return p; p[0] = a[0]; for (int k = 1; k < n; k++) p[k] = Mth.gcd(p[k - 1], a[k]); DBG.log("Arr.pGcd Result", p); return p; }
-        // Purpose: Compute Suffix GCDs | Input: int[] array | Output: long[]
-        public static long[] sGcd(int[] a) { int n = a.length; long[] s = new long[n]; if (n == 0) return s; s[n - 1] = a[n - 1]; for (int k = n - 2; k >= 0; k--) s[k] = Mth.gcd(s[k + 1], a[k]); DBG.log("Arr.sGcd Result", s); return s; }
+        int rootU = find(u);
+        int rootV = find(v);
+
+        if (rootU == rootV)
+            return false;
+
+        if (size[rootU] < size[rootV]) {
+
+            int temp = rootU;
+            rootU = rootV;
+            rootV = temp;
+        }
+
+        parent[rootV] = rootU;
+        size[rootU] += size[rootV];
+
+        return true;
     }
-  // Bit Manipulation Utilities (Class: Bit)
-static class Bit {
-    // Purpose: Get kth bit value (0 or 1) | Input: int number, int bitPosition | Output: boolean
-    public static boolean get(int n, int k) { boolean res = ((n >> k) & 1) == 1; DBG.log("Bit.get (" + n + "," + k + ")", res); return res; }
-    // Purpose: Set kth bit to 1 | Input: int number, int bitPosition | Output: int
-    public static int set(int n, int k) { int res = n | (1 << k); DBG.log("Bit.set (" + n + "," + k + ")", res); return res; }
-    // Purpose: Clear kth bit to 0 | Input: int number, int bitPosition | Output: int
-    public static int clear(int n, int k) { int res = n & ~(1 << k); DBG.log("Bit.clear (" + n + "," + k + ")", res); return res; }
-    // Purpose: Toggle kth bit | Input: int number, int bitPosition | Output: int
-    public static int toggle(int n, int k) { int res = n ^ (1 << k); DBG.log("Bit.toggle (" + n + "," + k + ")", res); return res; }
+
+    // Checks if two nodes belong to the same component
+    boolean same(int u, int v) {
+
+        return find(u) == find(v);
+    }
+}
+    // ============================== Segment Tree ================================
+
+static final class ST {
+
+    private final int n;
+    private final long[] tree;
+
+    // Builds Segment Tree from an initial array
+    ST(long[] arr) {
+
+        n = arr.length;
+        tree = new long[4 * n];
+
+        build(0, 0, n - 1, arr);
+    }
+
+    private void build(int node, int left, int right, long[] arr) {
+
+        if (left == right) {
+            tree[node] = arr[left];
+            return;
+        }
+
+        int mid = left + (right - left) / 2;
+
+        build(2 * node + 1, left, mid, arr);
+        build(2 * node + 2, mid + 1, right, arr);
+
+        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];
+    }
+
+    // Point Update
+    void upd(int idx, long value) {
+        update(0, 0, n - 1, idx, value);
+    }
+
+    private void update(int node, int left, int right, int idx, long value) {
+
+        if (left == right) {
+            tree[node] = value;
+            return;
+        }
+
+        int mid = left + (right - left) / 2;
+
+        if (idx <= mid)
+            update(2 * node + 1, left, mid, idx, value);
+        else
+            update(2 * node + 2, mid + 1, right, idx, value);
+
+        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];
+    }
+
+    // Range Sum Query
+    long q(int l, int r) {
+        return query(0, 0, n - 1, l, r);
+    }
+
+    private long query(int node, int left, int right, int l, int r) {
+
+        if (right < l || left > r)
+            return 0;
+
+        if (l <= left && right <= r)
+            return tree[node];
+
+        int mid = left + (right - left) / 2;
+
+        return query(2 * node + 1, left, mid, l, r)
+                + query(2 * node + 2, mid + 1, right, l, r);
+    }
+}
+
+
+// ======================= Mathematical Utilities =============================
+
+static final class Mth {
+
+    private Mth() {}
+
+    // Greatest Common Divisor
+    static long gcd(long a, long b) {
+
+        while (b != 0) {
+
+            long temp = a % b;
+            a = b;
+            b = temp;
+        }
+
+        return a;
+    }
+
+    // Least Common Multiple
+    static long lcm(long a, long b) {
+
+        return (a / gcd(a, b)) * b;
+    }
+
+    // Binary Exponentiation
+    static long pow(long base, long exp, long mod) {
+
+        long ans = 1;
+        base %= mod;
+
+        while (exp > 0) {
+
+            if ((exp & 1) == 1)
+                ans = (ans * base) % mod;
+
+            base = (base * base) % mod;
+            exp >>= 1;
+        }
+
+        return ans;
+    }
+
+    // Prime Check
+    static boolean prime(long n) {
+
+        if (n < 2)
+            return false;
+
+        if (n == 2 || n == 3)
+            return true;
+
+        if (n % 2 == 0 || n % 3 == 0)
+            return false;
+
+        for (long i = 5; i * i <= n; i += 6) {
+
+            if (n % i == 0 || n % (i + 2) == 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    // Sieve of Eratosthenes
+    static boolean[] sieve(int limit) {
+
+        boolean[] prime = new boolean[limit + 1];
+
+        Arrays.fill(prime, true);
+
+        if (limit >= 0)
+            prime[0] = false;
+
+        if (limit >= 1)
+            prime[1] = false;
+
+        for (int i = 2; i * i <= limit; i++) {
+
+            if (!prime[i])
+                continue;
+
+            for (int j = i * i; j <= limit; j += i)
+                prime[j] = false;
+        }
+
+        return prime;
+    }
+}
+
+    // ============================ Array Utilities ===============================
+
+static final class Arr {
+
+    private Arr() {}
+
+    // Returns first index where value >= target
+    static int lb(int[] arr, int target) {
+
+        int left = 0, right = arr.length;
+
+        while (left < right) {
+
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] >= target)
+                right = mid;
+            else
+                left = mid + 1;
+        }
+
+        return left;
+    }
+
+    // Returns first index where value > target
+    static int ub(int[] arr, int target) {
+
+        int left = 0, right = arr.length;
+
+        while (left < right) {
+
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] > target)
+                right = mid;
+            else
+                left = mid + 1;
+        }
+
+        return left;
+    }
+
+    // Prefix Sum
+    static long[] pSum(int[] arr) {
+
+        long[] prefix = new long[arr.length + 1];
+
+        for (int i = 0; i < arr.length; i++)
+            prefix[i + 1] = prefix[i] + arr[i];
+
+        return prefix;
+    }
+
+    // Suffix Sum
+    static long[] sSum(int[] arr) {
+
+        long[] suffix = new long[arr.length + 1];
+
+        for (int i = arr.length - 1; i >= 0; i--)
+            suffix[i] = suffix[i + 1] + arr[i];
+
+        return suffix;
+    }
+
+    // Prefix Minimum
+    static int[] pMin(int[] arr) {
+
+        int n = arr.length;
+        int[] ans = new int[n];
+
+        if (n == 0) return ans;
+
+        ans[0] = arr[0];
+
+        for (int i = 1; i < n; i++)
+            ans[i] = Math.min(ans[i - 1], arr[i]);
+
+        return ans;
+    }
+
+    // Suffix Minimum
+    static int[] sMin(int[] arr) {
+
+        int n = arr.length;
+        int[] ans = new int[n];
+
+        if (n == 0) return ans;
+
+        ans[n - 1] = arr[n - 1];
+
+        for (int i = n - 2; i >= 0; i--)
+            ans[i] = Math.min(ans[i + 1], arr[i]);
+
+        return ans;
+    }
+
+    // Prefix Maximum
+    static int[] pMax(int[] arr) {
+
+        int n = arr.length;
+        int[] ans = new int[n];
+
+        if (n == 0) return ans;
+
+        ans[0] = arr[0];
+
+        for (int i = 1; i < n; i++)
+            ans[i] = Math.max(ans[i - 1], arr[i]);
+
+        return ans;
+    }
+
+    // Suffix Maximum
+    static int[] sMax(int[] arr) {
+
+        int n = arr.length;
+        int[] ans = new int[n];
+
+        if (n == 0) return ans;
+
+        ans[n - 1] = arr[n - 1];
+
+        for (int i = n - 2; i >= 0; i--)
+            ans[i] = Math.max(ans[i + 1], arr[i]);
+
+        return ans;
+    }
+
+    // Prefix GCD
+    static long[] pGcd(int[] arr) {
+
+        int n = arr.length;
+        long[] ans = new long[n];
+
+        if (n == 0) return ans;
+
+        ans[0] = arr[0];
+
+        for (int i = 1; i < n; i++)
+            ans[i] = Mth.gcd(ans[i - 1], arr[i]);
+
+        return ans;
+    }
+
+    // Suffix GCD
+    static long[] sGcd(int[] arr) {
+
+        int n = arr.length;
+        long[] ans = new long[n];
+
+        if (n == 0) return ans;
+
+        ans[n - 1] = arr[n - 1];
+
+        for (int i = n - 2; i >= 0; i--)
+            ans[i] = Mth.gcd(ans[i + 1], arr[i]);
+
+        return ans;
+    }
+}
+
+
+// ====================== Bit Manipulation Utilities ==========================
+
+static final class Bit {
+
+    private Bit() {}
+
+    // Returns true if kth bit is set
+    static boolean get(int num, int bit) {
+
+        return ((num >> bit) & 1) != 0;
+    }
+
+    // Sets kth bit
+    static int set(int num, int bit) {
+
+        return num | (1 << bit);
+    }
+
+    // Clears kth bit
+    static int clear(int num, int bit) {
+
+        return num & ~(1 << bit);
+    }
+
+    // Toggles kth bit
+    static int toggle(int num, int bit) {
+
+        return num ^ (1 << bit);
+    }
+}
+
+
+// ================================ Solution ==================================
+
+static void solve() {
+
+    // Write your solution here
 
 }
 
+
+// ================================== Main ====================================
+
+public static void main(String[] args) {
+
+    solve();
+
+}
+}
