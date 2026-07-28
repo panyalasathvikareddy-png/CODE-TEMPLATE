@@ -36,13 +36,6 @@ public class Main {
             return result;
         }
 
-        // Computes a^b % MOD
-        static long pow(long base, long exp) {
-            long result = Mth.pow(base, exp, MOD);
-            DBG.log("Mod.pow", result);
-            return result;
-        }
-
         // Computes modular inverse of a
         static long inv(long value) {
             long result = pow(value, MOD - 2);
@@ -247,6 +240,64 @@ public class Main {
             return arr;
         }
     }
+    // ========================= Stack Utilities ==========================
+
+
+    static final class StackUtils {
+
+    private StackUtils() {}
+
+    // Finds Next Greater Element values
+    static int[] nge(int[] arr) {
+
+        int n = arr.length;
+        int[] ans = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        Arrays.fill(ans, -1);
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            while (!st.isEmpty() && st.peek() <= arr[i]) {
+                st.pop();
+            }
+
+            if (!st.isEmpty()) {
+                ans[i] = st.peek();
+            }
+
+            st.push(arr[i]);
+        }
+
+        return ans;
+    }
+
+
+    // Finds Next Greater Element indices
+    static int[] ngei(int[] arr) {
+
+        int n = arr.length;
+        int[] ans = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        Arrays.fill(ans, -1);
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            while (!st.isEmpty() && arr[st.peek()] <= arr[i]) {
+                st.pop();
+            }
+
+            if (!st.isEmpty()) {
+                ans[i] = st.peek();
+            }
+
+            st.push(i);
+        }
+
+        return ans;
+    }
+}
 
     // ========================= Grid Traversal Utilities ==========================
 
@@ -321,18 +372,6 @@ static final class DSU {
 
     private final int[] parent;
     private final int[] size;
-
-    // Initializes DSU
-    DSU(int nodes) {
-
-        parent = new int[nodes];
-        size = new int[nodes];
-
-        for (int i = 0; i < nodes; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
 
     // Finds representative of a set
     int find(int node) {
